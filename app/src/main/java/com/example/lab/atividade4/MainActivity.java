@@ -1,7 +1,9 @@
 package com.example.lab.atividade4;
 
 import android.app.Activity;
+import android.content.Context;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.view.Menu;
 import android.view.MenuItem;
@@ -16,49 +18,91 @@ import com.example.lab.atividade4.model.helper.UserHelper;
 
 public class MainActivity extends Activity {
 
-    protected Button btnEntrar;
-    protected Button btnLogin;
+    protected Button btnRegistrar;
+    protected Button btnLogar;
+    protected SharedPreferences prefs;
+
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
-        btnEntrar = (Button) findViewById(R.id.entrarButton);
-        btnEntrar.setOnClickListener(new View.OnClickListener() {
+        btnLogar = (Button) findViewById(R.id.Loginbutton);
+        btnLogar.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Intent intent = new Intent(MainActivity.this, NovoUserActivity.class);
-                MainActivity.this.startActivity(intent);
+                loginApp();
             }
         });
 
-        btnLogin = (Button) findViewById(R.id.Loginbutton);
-        btnLogin.setOnClickListener(new View.OnClickListener() {
+        btnRegistrar = (Button) findViewById(R.id.entrarButton);
+        btnRegistrar.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                String email = ((EditText) findViewById(R.id.textName)).getText().toString();
-                String senha = ((EditText) findViewById(R.id.textSenha)).getText().toString();
-
-                User user = UserHelper.INSTANCE.find(email);
-
-                if (user != null) {
-                    if (!user.senha.equals(senha)) {
-                        Toast.makeText(MainActivity.this, "Autenticação inválida.", Toast.LENGTH_SHORT).show();
-                    } else {
-                        Intent intent = new Intent(MainActivity.this, UserLogadoActivity.class);
-
-                        intent.putExtra("email", user.email);
-
-                        MainActivity.this.startActivity(intent);
-                    }
-                } else {
-                    Toast.makeText(MainActivity.this, "Email não cadastrado.", Toast.LENGTH_SHORT).show();
-                }
+                registerUser();
             }
         });
 
+        prefs = getApplicationContext().getSharedPreferences(
+                "session", Context.MODE_PRIVATE);
+
+        if (checkSession())
+        {
+            homeApp();
+        }
     }
+
+
+    private void loginApp()
+    {
+        String email = ((EditText) findViewById(R.id.textEmail)).getText().toString();
+        String senha = ((EditText) findViewById(R.id.textSenha)).getText().toString();
+
+        if (User.login(email, senha) != null)
+        {
+            salvarSessao(email);
+            homeApp();
+        }
+        else
+        {
+            Toast.makeText(MainActivity.this, "Email não cadastrado.", Toast.LENGTH_SHORT).show();
+        }
+    }
+
+    private void salvarSessao(String email)
+    {
+        SharedPreferences.Editor editor = prefs.edit();
+
+        editor.putBoolean("logged", true);
+        editor.putString("email", email);
+        editor.commit();
+    }
+
+    private void homeApp()
+    {
+        String email = prefs.getString("email", "");
+
+        Intent intent = new Intent(this, UserLogadoActivity.class);
+
+        intent.putExtra("email", email);
+
+        startActivity(intent);
+    }
+
+    private void registerUser()
+    {
+        Intent intent = new Intent(this, NovoUserActivity.class);
+
+        startActivity(intent);
+    }
+
+    private boolean checkSession()
+    {
+        return prefs.getBoolean("logged", false);
+    }
+
 
 
     @Override

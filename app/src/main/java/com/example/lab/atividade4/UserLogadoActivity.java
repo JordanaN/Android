@@ -7,6 +7,7 @@ import android.view.Menu;
 import android.view.MenuItem;
 import android.widget.TextView;
 
+import com.example.lab.atividade4.model.User;
 import com.example.lab.atividade4.model.helper.UserHelper;
 
 
@@ -17,10 +18,20 @@ public class UserLogadoActivity extends Activity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_user_logado);
 
-        Intent intent = getIntent();
-        String email = intent.getStringExtra("email");
+        String email_logged = getIntent().getStringExtra("email");
 
-        ((TextView) findViewById(R.id.userNameText)).setText(UserHelper.INSTANCE.find(email).name);
+        User user = UserHelper.INSTANCE.find(email_logged);
+
+        if (user == null)
+        {
+            Intent intent = new Intent(this, MainActivity.class);
+
+            startActivity(intent);
+        }
+        else
+        {
+            ((TextView) findViewById(R.id.labelNameUserLog)).setText(user.nome);
+        }
     }
 
 

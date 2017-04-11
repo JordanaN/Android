@@ -1,8 +1,10 @@
 package com.example.lab.atividade4.model.helper;
 
+
 import com.example.lab.atividade4.model.User;
 
 import java.util.HashMap;
+import java.util.LinkedHashMap;
 
 /**
  * Created by Lab on 14/03/2017.
@@ -10,13 +12,18 @@ import java.util.HashMap;
 public enum UserHelper {
     INSTANCE;
 
-    HashMap<String, User> users = new HashMap<>();
+    HashMap<String, User> users = new LinkedHashMap<>();
 
-    public User find(String email){
+    public User find(String email) {
         return users.get(email);
     }
 
-    public void add(String email, User user){
-        users.put(email,user);
+    public void add(User user) {
+        users.put(user.email, user);
+    }
+
+    public User getUserByEmail(String email)
+    {
+        return users.get(email);
     }
 }

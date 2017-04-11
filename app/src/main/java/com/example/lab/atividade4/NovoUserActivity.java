@@ -1,7 +1,9 @@
 package com.example.lab.atividade4;
 
 import android.app.Activity;
+import android.content.Context;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.view.Menu;
 import android.view.MenuItem;
@@ -16,30 +18,46 @@ import com.example.lab.atividade4.model.helper.UserHelper;
 public class NovoUserActivity extends Activity {
 
     protected Button btnSalvar;
+    protected SharedPreferences prefs;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_novo_user);
 
-        btnSalvar = (Button) findViewById(R.id.dalvarButton);
+        btnSalvar = (Button) findViewById(R.id.btnSalvar);
         btnSalvar.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 Intent intent = new Intent(NovoUserActivity.this, UserLogadoActivity.class);
 
-                intent.putExtra("email", ((EditText) findViewById(R.id.editTextEmail)).getText().toString());
-
-                NovoUserActivity.this.startActivity(intent);
-
                 User user = new User();
 
-                user.email = ((EditText) findViewById(R.id.editTextEmail)).getText().toString();
-                user.name = ((EditText) findViewById(R.id.editTextNome)).getText().toString();
-                user.senha = ((EditText) findViewById(R.id.editTextSenha)).getText().toString();
+                user.nome = ((EditText) findViewById(R.id.textNome)).getText().toString();
+                user.email = ((EditText) findViewById(R.id.textEmail)).getText().toString();
+                user.senha = ((EditText) findViewById(R.id.textSenha)).getText().toString();
 
-                UserHelper.INSTANCE.add(user.email, user);
+                intent.putExtra("email", user.email);
+
+                user.save();
+
+                saveSession(user.email);
+
+                NovoUserActivity.this.startActivity(intent);
             }
         });
+
+        prefs = getApplicationContext().getSharedPreferences(
+                "session", Context.MODE_PRIVATE);
+    }
+
+    private void saveSession(String email)
+    {
+        SharedPreferences.Editor editor = prefs.edit();
+
+        editor.putBoolean("logged", true);
+        editor.putString("email", email);
+        editor.commit();
     }
 
 

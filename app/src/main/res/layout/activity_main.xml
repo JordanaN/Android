@@ -11,10 +11,10 @@
         android:orientation="vertical"
         android:layout_width="fill_parent"
         android:layout_height="fill_parent"
-        android:layout_alignParentBottom="true"
-        android:layout_centerHorizontal="true"
-        android:layout_marginBottom="22dp"
-        android:layout_margin="50dp">
+        android:layout_marginLeft="50dp"
+        android:layout_marginRight="50dp"
+        android:layout_alignParentTop="true"
+        android:layout_centerHorizontal="true">
 
         <ImageView
             android:layout_width="wrap_content"
@@ -25,27 +25,30 @@
             android:layout_marginTop="10dp" />
 
         <TextView
+            android:id="@+id/texLabeltEmail"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:textAppearance="?android:attr/textAppearanceSmall"
-            android:text="email"
-            android:id="@+id/textNome"
+            android:layout_marginLeft="10dp"
             android:layout_marginTop="20dp"
-            android:layout_marginLeft="10dp" />
+            android:autoText="false"
+            android:text="email"
+            android:textAppearance="?android:attr/textAppearanceSmall"
+            tools:textColor="@android:color/holo_green_light" />
 
         <EditText
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:id="@+id/textName" />
+            android:id="@+id/textEmail" />
 
         <TextView
+            android:id="@+id/senhaText"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:textAppearance="?android:attr/textAppearanceSmall"
-            android:text="senha"
-            android:id="@+id/senhaText"
+            android:layout_marginLeft="10dp"
             android:layout_marginTop="20dp"
-            android:layout_marginLeft="10dp" />
+            android:text="senha"
+            android:textAppearance="?android:attr/textAppearanceSmall"
+            tools:textColor="@android:color/holo_green_light" />
 
         <EditText
             android:layout_width="match_parent"
@@ -55,17 +58,19 @@
             android:id="@+id/textSenha" />
 
         <Button
-            android:layout_width="254dp"
-            android:layout_height="wrap_content"
-            android:text="Login"
             android:id="@+id/Loginbutton"
-            android:layout_gravity="right" />
-
-        <Button
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:text="Registrar"
-            android:id="@+id/entrarButton" />
+            android:layout_gravity="center_horizontal"
+            android:text="Login"
+            tools:background="@android:color/holo_green_light" />
+
+        <Button
+            android:id="@+id/entrarButton"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center_horizontal"
+            android:text="Registrar" />
 
     </LinearLayout>
 </RelativeLayout>

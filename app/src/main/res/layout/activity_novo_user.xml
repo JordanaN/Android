@@ -13,46 +13,46 @@
         android:layout_centerHorizontal="true">
 
         <TextView
+            android:id="@+id/nomeLabelText"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:textAppearance="?android:attr/textAppearanceMedium"
             android:text="Nome"
-            android:id="@+id/nomeText" />
+            android:textAppearance="?android:attr/textAppearanceMedium" />
 
         <EditText
+            android:id="@+id/textNome"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:id="@+id/editTextNome" />
+            android:layout_height="wrap_content" />
 
         <TextView
+            android:id="@+id/emailLabelText"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:textAppearance="?android:attr/textAppearanceMedium"
             android:text="Email"
-            android:id="@+id/emailText" />
+            android:textAppearance="?android:attr/textAppearanceMedium" />
 
         <EditText
+            android:id="@+id/textEmail"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:id="@+id/editTextEmail" />
+            android:layout_height="wrap_content" />
 
         <TextView
+            android:id="@+id/senhaLabelText"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:textAppearance="?android:attr/textAppearanceMedium"
             android:text="Senha"
-            android:id="@+id/senhaText" />
+            android:textAppearance="?android:attr/textAppearanceMedium" />
 
         <EditText
+            android:id="@+id/textSenha"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:id="@+id/editTextSenha" />
+            android:layout_height="wrap_content" />
 
         <Button
+            android:id="@+id/btnSalvar"
             android:layout_width="245dp"
             android:layout_height="wrap_content"
-            android:text="Salvar"
-            android:id="@+id/dalvarButton"
-            android:layout_gravity="center_horizontal" />
+            android:layout_gravity="center_horizontal"
+            android:text="Salvar" />
     </LinearLayout>
 </RelativeLayout>
