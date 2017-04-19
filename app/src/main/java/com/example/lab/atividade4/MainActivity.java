@@ -5,6 +5,7 @@ import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
@@ -84,11 +85,14 @@ public class MainActivity extends Activity {
     {
         String email = prefs.getString("email", "");
 
-        Intent intent = new Intent(this, UserLogadoActivity.class);
+        if (!email.contentEquals("")) {
+            Intent intent = new Intent(this, UserLogadoActivity.class);
+            intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP| Intent.FLAG_ACTIVITY_SINGLE_TOP);
+            intent.putExtra("email", email);
+            startActivity(intent);
 
-        intent.putExtra("email", email);
-
-        startActivity(intent);
+            finish();
+        }
     }
 
     private void registerUser()

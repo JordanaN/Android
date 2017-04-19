@@ -6,6 +6,7 @@ import com.example.lab.atividade4.model.helper.UserHelper;
  * Created by Lab on 14/03/2017.
  */
 public class User {
+    public long id;
     public String nome;
     public String email;
     public String senha;

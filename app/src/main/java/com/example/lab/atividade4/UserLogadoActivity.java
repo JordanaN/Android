@@ -1,8 +1,11 @@
 package com.example.lab.atividade4;
 
 import android.app.Activity;
+import android.content.Context;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.widget.TextView;
@@ -13,25 +16,42 @@ import com.example.lab.atividade4.model.helper.UserHelper;
 
 public class UserLogadoActivity extends Activity {
 
+    private SharedPreferences prefs;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_user_logado);
 
+        prefs = getApplicationContext().getSharedPreferences(
+                "session", Context.MODE_PRIVATE);
+
         String email_logged = getIntent().getStringExtra("email");
 
-        User user = UserHelper.INSTANCE.find(email_logged);
+        if (email_logged.contentEquals("")) {
+            Intent intent = new Intent(this, MainActivity.class);
+
+            resetSession();
+
+            startActivity(intent);
+        } else {
+            ((TextView) findViewById(R.id.labelNameUserLog)).setText(email_logged);
+        }
+
+        /*User user = UserHelper.INSTANCE.find(email_logged);
 
         if (user == null)
         {
             Intent intent = new Intent(this, MainActivity.class);
+
+            resetSession();
 
             startActivity(intent);
         }
         else
         {
             ((TextView) findViewById(R.id.labelNameUserLog)).setText(user.nome);
-        }
+        }*/
     }
 
 
@@ -55,5 +75,14 @@ public class UserLogadoActivity extends Activity {
         }
 
         return super.onOptionsItemSelected(item);
+    }
+
+    private void resetSession()
+    {
+        SharedPreferences.Editor editor = prefs.edit();
+
+        editor.putBoolean("logged", false);
+        editor.putString("email", null);
+        editor.commit();
     }
 }
